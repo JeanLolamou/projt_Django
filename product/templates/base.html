@@ -1,0 +1,139 @@
+{% load static %}
+<!Doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+
+    <title>{% block title %}{% endblock title %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{% static 'external/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'external/fontawesome/css/font-awesome.min.css' %}">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="{% url 'product:index' %}"><i class="fa fa-product-hunt"
+                        style="color:goldenrod; font-size: 27px;"></i>
+                    Product Hunt</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" id=Homepage href="{% url 'product:index' %}"><i class="fa fa-home"></i>
+                                Homepage</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id=MyProducts href="{% url 'account:index' %}"><i
+                                    class="fa fa-list-ul"></i>
+                                My products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id=AddProduct href="{% url 'product:add_product' %}"><i
+                                    class="fa fa-plus"></i>
+                                add product</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" id=Logout
+                                href="javascript:{document.getElementById('logout').submit()}"><i
+                                    class="fa fa-sign-in"></i>
+                                Logout</a>
+                            <form action="{% url 'account:logout' %}" method="POST" id="logout">{% csrf_token %}
+                                <input type="hidden">
+                            </form>
+                        </li>
+
+                        {% else %}
+
+                        <li class="nav-item">
+                            <a class="nav-link" id=SignUp href="{% url 'account:signup' %}"><i
+                                    class="fa fa-user-plus"></i>
+                                Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id=Login href="{% url 'account:signin' %}"><i class="fa fa-user"></i></i>
+                                Login</a>
+                        </li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main role="main">
+
+
+        {% block content %}
+
+        {% endblock content %}
+
+    </main>
+
+    <footer class="text-muted">
+        <div class="container text-center">
+            <p>&copy; ProductHunt {% now 'Y' %}</p>
+        </div>
+    </footer>
+    <script src="{% static 'external/js/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'external/js/popper.min.js' %}"></script>
+    <script src="{% static 'external/js/bootstrap.min.js'%}"></script>
+    <script>
+        $(document).ready(function () {
+            var title = document.title;
+            switch (title) {
+                case 'Home-Product Hunt':
+                    $('#Homepage').addClass("active");
+                    break;
+
+                case 'User-Home':
+                    $('#MyProducts').addClass("active");
+                    break;
+
+                case 'Add product':
+                    $('#AddProduct').addClass("active");
+                    break;
+
+                case 'User Registration':
+                    $('#SignUp').addClass("active");
+                    break;
+
+                case 'User Login':
+                    $('#Login').addClass("active");
+                    break;
+            }
+
+
+        }
+        );
+    </script>
+</body>
+
+</html>

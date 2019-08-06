@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit product{% endblock title %}
+
+{% block content %}
+<br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Edit Product</h4>
+            <hr>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <form action="{% url 'product:edit_product' IdProduct %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+               
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    {{form.title}}
+                </div>
+                <div class="form-group">
+                    <label for="body">Description</label>
+                    <textarea class="form-control" id="body" name="body" rows="3" required>{{form.body}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="url">Product url</label>
+                    <input type="text" class="form-control" id="url" name="url" value="{{form.product_url}}"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="icon">Product icon</label> <br>
+                    <img class="img img-fluid" src="{{form.icon.url}}">
+                    <input type="file" class="form-control-file" id="icon" name="icon" value="{{form.icon.url}}">
+                </div>
+                <div class="form-group">
+                    <label for="icon">Product image</label> <br>
+                    <img class="img img-fluid" src="{{form.image.url}}">
+                    <input type="file" class="form-control-file" id="image" name="image" value="{{form.image.url}}">
+                </div>
+                <button type="submit" class="btn btn-primary">Upload</button>
+                <a for=button class="btn btn-danger" href="{% url 'account:index'  %}">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+<br><br><br><br>
+{% endblock content %}

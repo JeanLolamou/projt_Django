@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+<!--     CRISPY FORMS      -->
+{% load crispy_forms_tags%}
+{% block title %}User Registration{% endblock title %}
+
+{% block content %}
+<br><br>
+<div class="container col-md-4">
+    <h4>Sign Up</h4>
+    <hr>
+    {% if messages %}
+    {% for message in messages %}
+    <div {% if message.tags %} class="row alert alert-{{ message.tags }} alert-dismissible fade show d-inline-block "
+        {% endif %} style="text-align:center" role="alert">
+        <div> {{ message }}</div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <form action="{% url 'account:signup' %}" method="POST">
+        {% csrf_token %}
+        <fieldset>
+            {{form|crispy}}
+        </fieldset>
+        <div class="form-group">
+            <button type="submit" class="btn btn-outline-info">Sign Up!</button>
+        </div>
+    </form>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Already Have  An Account? <a href="{% url 'account:signin' %}">Sign In</a>
+        </small>
+    </div>
+</div>
+<br><br><br><br>
+{% endblock content %}
